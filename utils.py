@@ -1,3 +1,5 @@
+import random
+
 def increase_ip(ip):
     ip = ip.split('.')
     ip[3] = str(int(ip[3]) + 1)
@@ -41,4 +43,18 @@ def create_IP_range(start, stop, mode):
     
     return ip_list
 
+def get_ip(ip_pool: list, used_ip: dict, mac_address: str):
+    if mac_address in used_ip:
+        return used_ip[mac_address]
+
+    selected_ip = random.choice(ip_pool)
+    while selected_ip in used_ip.values():
+        selected_ip = random.choice(ip_pool)
     
+    used_ip[mac_address] = selected_ip
+    return selected_ip
+
+
+
+
+    1
