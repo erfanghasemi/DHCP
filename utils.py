@@ -45,7 +45,6 @@ def create_IP_range(start, stop, mode):
 
 def get_ip(ip_pool: list, used_ip: dict, mac_address: str):
     if mac_address in used_ip:
-        print("salam55555")
         return used_ip[mac_address]
     selected_ip = random.SystemRandom().choice(ip_pool)
     while selected_ip in used_ip.values():
@@ -70,3 +69,10 @@ def remove_client(ip_lease_usedPair: dict, mac_ip_usedPair: dict, clients_info: 
             if ip == client[2]:
                 clients_info.remove(client)
         
+def discover_interval(waiting_time: int, initial_interval: int, backoff_cutoff: int):
+
+    new_waiting_time = random.random() * 2 * initial_interval
+    if waiting_time <= backoff_cutoff:
+        return new_waiting_time
+    else:
+        return  new_waiting_time
