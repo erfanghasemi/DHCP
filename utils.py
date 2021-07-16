@@ -45,16 +45,28 @@ def create_IP_range(start, stop, mode):
 
 def get_ip(ip_pool: list, used_ip: dict, mac_address: str):
     if mac_address in used_ip:
+        print("salam55555")
         return used_ip[mac_address]
-
-    selected_ip = random.choice(ip_pool)
+    selected_ip = random.SystemRandom().choice(ip_pool)
     while selected_ip in used_ip.values():
         selected_ip = random.choice(ip_pool)
-    
+
     used_ip[mac_address] = selected_ip
     return selected_ip
 
+def remove_client(ip_lease_usedPair: dict, mac_ip_usedPair: dict, clients_info: list, lease_time: int, time: int):
+    removed_ip = []
+    for ip in ip_lease_usedPair:
+        if time-ip_lease_usedPair[ip] >= lease_time:
+            removed_ip.append(ip)
+    for ip in removed_ip:
+        del ip_lease_usedPair[ip]
+        for key, value in mac_ip_usedPair.items():
+            if value == ip:
+                del mac_ip_usedPair[key]
+                break
 
-
-
-    1
+        for client in clients_info:
+            if ip == client[2]:
+                clients_info.remove(client)
+        
